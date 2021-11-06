@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <title>Máscaras - Inputs</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .container input {
+            background: rgb(224, 224, 224);
+        }
+
+        .moeda {
+            text-align: right;
+        }
+    </style>
+
+    <script type="text/javascript">
+        function mascara(o, f) {
+            v_obj = o
+            v_fun = f
+            setTimeout("execmascara()", 1)
+        }
+
+        function execmascara() {
+            v_obj.value = v_fun(v_obj.value)
+        }
+
+        function leech(v) {
+            v = v.replace(/o/gi, "0")
+            v = v.replace(/i/gi, "1")
+            v = v.replace(/z/gi, "2")
+            v = v.replace(/e/gi, "3")
+            v = v.replace(/a/gi, "4")
+            v = v.replace(/s/gi, "5")
+            v = v.replace(/t/gi, "7")
+            return v
+        }
+
+        function soNumeros(v) {
+            return v.replace(/\D/g, "")
+        }
+
+        function telefone(v) {
+            v = v.replace(/\D/g, "")                 //Remove tudo o que não é dígito
+            v = v.replace(/^(\d\d)(\d)/g, "($1) $2") //Coloca parênteses em volta dos dois primeiros dígitos
+            v = v.replace(/(\d{4})(\d)/, "$1-$2")    //Coloca hífen entre o quarto e o quinto dígitos
+            return v
+        }
+
+        function celular(v) {
+            v = v.replace(/\D/g, "")                 //Remove tudo o que não é dígito
+            v = v.replace(/^(\d\d)(\d)/g, "($1) $2") //Coloca parênteses em volta dos dois primeiros dígitos
+            v = v.replace(/(\d{5})(\d)/, "$1-$2")    //Coloca hífen entre o quarto e o quinto dígitos
+            return v
+        }
+
+        function cpf(v) {
+            v = v.replace(/\D/g, "")                    //Remove tudo o que não é dígito
+            v = v.replace(/(\d{3})(\d)/, "$1.$2")       //Coloca um ponto entre o terceiro e o quarto dígitos
+            v = v.replace(/(\d{3})(\d)/, "$1.$2")       //Coloca um ponto entre o terceiro e o quarto dígitos
+            //de novo (para o segundo bloco de números)
+            v = v.replace(/(\d{3})(\d{1,2})$/, "$1-$2") //Coloca um hífen entre o terceiro e o quarto dígitos
+            return v
+        }
+
+        function cep(v) {
+            v = v.replace(/D/g, "")                //Remove tudo o que não é dígito
+            v = v.replace(/^(\d{5})(\d)/, "$1-$2") //Esse é tão fácil que não merece explicações
+            return v
+        }
+
+        function cnpj(v) {
+            v = v.replace(/\D/g, "")                           //Remove tudo o que não é dígito
+            v = v.replace(/^(\d{2})(\d)/, "$1.$2")             //Coloca ponto entre o segundo e o terceiro dígitos
+            v = v.replace(/^(\d{2})\.(\d{3})(\d)/, "$1.$2.$3") //Coloca ponto entre o quinto e o sexto dígitos
+            v = v.replace(/\.(\d{3})(\d)/, ".$1/$2")           //Coloca uma barra entre o oitavo e o nono dígitos
+            v = v.replace(/(\d{4})(\d)/, "$1-$2")              //Coloca um hífen depois do bloco de quatro dígitos
+            return v
+        }
+
+        function moeda(v) {
+            v = v.replace(/\D/g, "")                           //Remove tudo o que não é dígito
+            v = v.replace(/^(\d{3})(\d)/, "$1.$2")             //Coloca ponto entre o segundo e o terceiro dígitos
+            v = v.replace(/^(\d{3})\.(\d{3})(\d)/, "$1.$2,$3") //Coloca ponto entre o quinto e o sexto dígitos
+            return v
+        }
+    </script>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="text-center p-3">
+            <h1>Máscaras em Inputs HTML</h1>
+        </div>
+        <hr>
+        <div class="form-row g-3 p-3">
+            <div class="form-group col-md-2">
+                <label for="inputCEP">CEP</label>
+                <input type="text" class="form-control form-control-sm" id="inputCEP" onkeypress="mascara(this,cep)"
+                    maxlength="9">
+            </div>
+        </div>
+
+        <div class="form-row g-3 p-3">
+            <div class="form-group col-md-3">
+                <label for="inputCPF">CPF</label>
+                <input type="text" class="form-control form-control-sm" id="inputCPF" onkeypress="mascara(this,cpf)"
+                    maxlength="14">
+            </div>
+
+            <div class="form-group col-md-3">
+                <label for="inputCNPJ">CNPJ</label>
+                <input type="text" class="form-control form-control-sm" id="inputCNPJ" onkeypress="mascara(this,cnpj)"
+                    maxlength="14">
+            </div>
+        </div>
+
+        <div class="form-row g-3 p-3">
+            <div class="form-group col-md-2">
+                <label for="inputTelefone">TELEFONE</label>
+                <input type="text" class="form-control form-control-sm" id="inputTelefone"
+                    onkeypress="mascara(this,telefone)" maxlength="14">
+            </div>
+
+            <div class="form-group col-md-2">
+                <label for="inputCelular">CELULAR</label>
+                <input type="text" class="form-control form-control-sm" id="inputCelular"
+                    onkeypress="mascara(this,celular)" maxlength="15">
+            </div>
+        </div>
+
+        <div class="form-row g-3 p-3">
+            <div class="form-group col-md-2">
+                <label for="inputMoeda">Moeda</label>
+                <input type="text" class="form-control form-control-sm moeda" id="inputMoeda" onkeypress="mascara(this,moeda)"
+                    maxlength="10">
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript (Opcional) -->
+    <!-- jQuery primeiro, depois Popper.js, depois Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
