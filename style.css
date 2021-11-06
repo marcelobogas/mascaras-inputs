@@ -1,0 +1,12 @@
+* {
+    margin : 0;
+    padding: 0;
+}
+
+.container input {
+    background: rgb(224, 224, 224);
+}
+
+.moeda {
+    text-align: right;
+}
